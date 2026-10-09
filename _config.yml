@@ -1,0 +1,20 @@
+# --- Your info (edit these) ---------------------------------------------
+title: Mansur Mukimbekov
+tagline: Student · George Washington University
+description: Personal site and blog of Mansur Mukimbekov. Notes on trustworthy AI and coursework.
+author: Mansur Mukimbekov
+# Your photo: put a square image at assets/img/profile.jpg and change this line to /assets/img/profile.jpg
+avatar: /assets/img/avatar.svg
+# Links shown under your photo. Leave a value empty ("") to hide it.
+social:
+  github: mansur20478
+  linkedin: ""        # e.g. your-linkedin-handle
+  email: ""           # e.g. you@example.com
+
+# --- Site settings --------------------------------------------------------
+url: https://mansur20478.github.io
+markdown: kramdown
+permalink: /blog/:title/
+plugins:
+  - jekyll-seo-tag
+exclude: [Gemfile, Gemfile.lock, README.md, .jekyll-cache]
