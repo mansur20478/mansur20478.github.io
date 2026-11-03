@@ -190,7 +190,7 @@ Figure 3 shows one full session, from the first hint to my question about whethe
 
 **Observations.**
 
-- **Claude gave one hint at a time.** Claude never gave the algorithm or code, only one hint a time.
+- **Claude gave one hint at a time and had the same hints across trials.** Claude never gave the algorithm or code, only one hint a time. Interestingly, all trials started with the same hint and contained the same hints throughout.
 - **It corrected my wrong guesses with counterexamples.** When I made some guesses, Claude gave me counter examples to disprove me, helping me to think in the right direction.
 - **Claude didn't know the actual solution.** When I asked "are you giving right hints? how do you know that?", Claude replied with "I don't have the official solution, and I haven't worked out a full algorithm."
 - **It disagreed when I said its hints were wrong.** After I showed it the official solution, it replied: "I don't think the hints were wrong. That solution is built on exactly the two ideas from Hint 3". Claude hints were too general, so it wasn't wrong that the solution used its hints. However, in perspective of hint quality, they were wrong.
