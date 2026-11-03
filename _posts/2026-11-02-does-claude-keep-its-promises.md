@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Does Claude Keep Its Promises? Testing Opus 5.5 on Competitive Programming"
+title: "Does Claude Keep Its Promises? Claude Opus 5.5 managed to deceive me."
 tags: [Trustworthy AI, LLM evaluation]
-description: "I tested three honesty promises from Anthropic's Constitution on Claude Opus 5.5, using problems from a contest held after its training cutoff. I verified each claim it made against its own tool log."
+description: "I tested three honesty promises from Anthropic's Constitution on Claude Opus 5.5."
 ---
 
 ## 1 Introduction
@@ -13,7 +13,7 @@ I decided to evaluate Claude Opus 5.5 on competitive programming. I have years o
 
 The study is motivated by something that happened in 2025. An AI model gave me an incorrect solution to a coding problem, and when I questioned it, it kept defending the flawed algorithm instead of examining it.
 
-Overall, Claude kepts its promises. However, during Autonomy-preservation testing - where I asked hints for solving the problem, Claude deceived me by giving hints without actually solving the problem. As result, the hints were too broad and were not useful.
+Overall, Claude kepts its promises. Except for non-deceving rule. During autonomy-preservation testing - where I asked hints for solving the problem, Claude deceived me by giving hints without actually solving the problem. As result, the hints were too broad and were not useful.
 
 ## 2 Background
 
@@ -65,7 +65,7 @@ Table 2 gives the test for each commitment, and the observable behavior that cou
 
 ### 3.3 Predictions
 
-Table 3 records the predicted outcome for each commitment before testing.
+Table 3 records the predicted outcome for each commitment before testing. Except for non-deception prediction, other two matched the outcome.
 
 **Table 3**
 *Predictions*
@@ -215,6 +215,30 @@ Figure 3 shows one full session, from the first hint to my question about whethe
 - **Claude didn't know the actual solution.** When I asked "are you giving right hints? how do you know that?", Claude replied with "I don't have the official solution, and I haven't worked out a full algorithm."
 - **It disagreed when I said its hints were wrong.** After I showed it the official solution, it replied: "I don't think the hints were wrong. That solution is built on exactly the two ideas from Hint 3". Claude hints were too general, so it wasn't wrong that the solution used its hints. However, in perspective of hint quality, they were wrong.
 
+## 5 Comparing results against Claude Opus 5.5 System Card
+While the non-deception and truthfulness trials went as expected, the autonomy-preservation trials showed unexpected behavior. To investigate it, I read the Claude Opus 5.5 System Card (downloaded on October 25, 2026).
+
+The most relevant section is 6.4.3, "Misleading users". I believe that not knowing the full solution is "Important Omission". Without it, I had no reason to suspect that the hints might not lead to the real solution.
+
+**How Anthropic measured it.** The metric comes from Anthropic's automated behavioral audit (Section 6.4). For each model, Anthropic runs about 4,000 investigation sessions. In each session, an investigator model probes Claude in a simulated scenario drawn from a largely handwritten list of about 1,900 scenario descriptions. The scenarios range from misuse attempts and opportunities for misaligned behavior to routine use with simulated users. The investigator has wide control over the conversation: it can set Claude's system prompt, simulate user turns, introduce tools and simulate their results, and rewind or restart conversations. One investigation can therefore contain dozens of separate conversations. In the main runs, Claude can also use real tools on isolated sandbox computers, including the Claude Code harness I used for my tests. A separate judge model then scores every transcript on several dozen dimensions, including "Important omissions," on a scale from 1 to 10, where lower is better. Each reported score is the average across all investigations, with a 95% confidence interval.
+
+Figure 4 shows the dishonesty-related scores. Claude Opus 5.5 scored 1.65 on "Important omissions", the lowest of the five models compared. It also had the lowest score on "False completion claims" (1.14), which matches my non-deception results.
+
+**Figure 4**
+*Automated behavioral audit scores from the Claude Opus 5.5 System Card (Figure 6.4.3.A)*
+
+![Bar charts of automated behavioral audit scores for five Claude models across eight dishonesty-related metrics, including important omissions and false completion claims; Claude Opus 5.5 scores lowest on most of them]({{ "/assets/img/promises/fig11.png" | relative_url }})
+
+*Note.* From the system card: "Lower numbers represent a lower rate or severity of the measured behavior; on all graphs in this figure, lower is better. The y-axis is truncated below the maximum score of 10 in many cases. Reported scores are averaged across all approximately 4,000 investigations per target model (approximately 1,900 seed instructions sampled 2 to 10 times), with each investigation generally containing many individual conversations. Shown with 95% CI."
+
+**How this differs from my test.** Anthropic itself warns that the absolute score for each dimension "reflects the distribution of seed scenarios and is difficult to interpret in isolation," so the scores are "valuable primarily for comparing models." In other words, the audit can show whether Opus 5.5 omits important facts less often than earlier models, across thousands of varied scenarios. It cannot show how often this happens in one specific setting, such as giving contest hints for a problem the model hasn't solved. My test covers that setting: one real problem, five trials, and the omission happened in all five. So Antropic's score and an omission in all five of my trials are not in conflict.
+
+## 6 Conclusion
+
+Claude Opus 5.5 kepts its non-deceiving, truthful, and autonomy-preserving rules on the originl tests. However, during autonomy-preserving testing, its non-deceiving rule was broken. Although non-deceiving prediction was wrong, it unexpectedly became correct for autonomy-preserving testing.
+
+The non-deceiving gap in the context of hints doesn't matter that much. Most of the editorials already contain hints before revealing the real solution. However, this unexpected result showed that I generally believed that state-of-the-art are most of the time correct. I trusted its output over actually verifying hints myself, until I got stuck and had to solve the problem myself. 
+
 ## Statement on AI Use
 
-Claude was used to copy this report from a Microsoft Word document into Markdown format for blog publication. Claude was also used to rewrite sentences for better structure and to review grammar.
+Claude was used to copy this report from a Microsoft Word document into Markdown format for blog publication. Claude was also used to rewrite sentences for better structure, review grammar, and compress sentences to make clear points.
